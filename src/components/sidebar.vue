@@ -22,10 +22,6 @@ export default {
           link: 'Creation'
         },
         {
-          text: 'อัพเดตข้อมูล',
-          link: 'Update'
-        },
-        {
           text: 'ลบข้อมูล',
           link: 'Delete'
         }

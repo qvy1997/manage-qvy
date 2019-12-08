@@ -11,11 +11,6 @@ export default new Router({
       component: () => import('../views/addSubject.vue')
     },
     {
-      path: '/update',
-      name: 'Update',
-      component: () => import('../views/updateSubject.vue')
-    },
-    {
       path: '/delete',
       name: 'Delete',
       component: () => import('../views/deleteSubject.vue')
