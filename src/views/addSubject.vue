@@ -97,7 +97,6 @@ export default {
         url: 'https://us-central1-backend-qvy.cloudfunctions.net/backendAPI/createSubject',
         data: data
       })
-      console.log(dataAxios)
       if (dataAxios.data.success === 9999) {
         this.$buefy.dialog.alert({
           message: 'รหัสวิชานี้มีซ้ำกับฐานข้อมูลเดิม',
@@ -109,6 +108,7 @@ export default {
           message: 'ทำรายการเสร็จเรียบร้อย',
           confirmText: 'ตกลง'
         })
+        this.deleteText()
       }
       this.isLoading = false
     },
@@ -123,6 +123,17 @@ export default {
         cancelText: 'ยกเลิก',
         onConfirm: () => this.submit()
       })
+    },
+    deleteText () {
+      this.classYear = ''
+      this.bookRecom = ''
+      this.codeSubject = ''
+      this.credit = 0
+      this.detailSubject = ''
+      this.imageTeacher = null
+      this.nameSubject = ''
+      this.note = ''
+      this.teacher = ''
     }
   }
 }
