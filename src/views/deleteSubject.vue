@@ -94,7 +94,7 @@ export default {
     deleteSubjec (std, code) {
       axios({
         method: 'DELETE',
-        url: 'http://localhost:5000/backend-qvy/us-central1/backendAPI/testsss',
+        url: 'https://us-central1-backend-qvy.cloudfunctions.net/backendAPI/deleteSubject',
         data: {
           student: std,
           codeSubject: code
