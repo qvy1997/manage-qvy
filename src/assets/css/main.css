@@ -34,12 +34,29 @@
   text-align: center;
 }
 
-.sidebar-menu {
-  list-style: none;
+.login form {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-#app {
+.flexSidebar {
   display: flex;
+}
+
+.flexSidebar .magin-page {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.login.container {
+  height: 100vh;
+}
+
+.sidebar-menu {
+  list-style: none;
 }
 
 .sidebar {
@@ -75,22 +92,24 @@ ul.sidebar-menu li {
   height: 1000px;
 }
 
-.wrapper {
-  padding-top: 15px;
+.deleteSubject .b-table {
+  overflow-x: scroll;
+}
+
+.table-wrapper td {
+  vertical-align: middle;
 }
 
 .container-form {
-  padding-top: 30px;
+  padding: 30px 80px;
+}
+
+.deleteSubject .wrapper.text-center {
+  padding: 30px;
 }
 
 .file {
   margin-top: 25px;
-}
-
-.container.text-center.main-page {
-  overflow-y: scroll;
-  height: 100vh;
-  padding-bottom: 100px;
 }
 
 html {

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import './assets/css/main.css'
 import './buefy'
+import './veevalidate'
 
 Vue.config.productionTip = false
 

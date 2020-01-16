@@ -9,10 +9,14 @@
         {{ menu.text }}
       </li>
     </ul>
+    <div class="logut">
+      <button @click="logout">LOGOUT</button>
+    </div>
   </div>
 </template>
 
 <script>
+import { auth } from '../firebase'
 export default {
   data () {
     return {
@@ -24,6 +28,10 @@ export default {
         {
           text: 'ลบข้อมูล',
           link: 'Delete'
+        },
+        {
+          text: 'ค้นหารายวิชา',
+          link: 'Search'
         }
       ]
     }
@@ -31,6 +39,11 @@ export default {
   methods: {
     linkRouter (link) {
       this.$router.push({ name: link })
+    },
+    logout () {
+      auth.signOut()
+      this.$router.push({name: 'Login'})
+      sessionStorage.removeItem('uid')
     }
   }
 }
