@@ -3,10 +3,25 @@
     <div class="container-sidebar">
       <sidebar />
     </div>
-    <b-loading :is-full-page="false"  :active.sync="isLoading"></b-loading>
     <div class="magin-page container text-center">
+    <b-loading :is-full-page="false"  :active.sync="isLoading"></b-loading>
       <div class="wrapper text-center">
         <h2>ลบรายวิชา</h2>
+          <b-field label="ค้นหารหัสวิชา">
+            <b-autocomplete
+              expanded
+              field="codeSubject"
+              v-model="name"
+              :data="filteredDataArray"
+              :keep-first="keepFirst"
+              :open-on-focus="openOnFocus"
+              placeholder="ค้นหารายวิชา"
+              icon="magnify"
+              @select="option => selected = option">
+                <template slot="empty">ไม่พบรายวิชานี้</template>
+            </b-autocomplete>
+          </b-field>
+
         <b-field label="ปีการศึกษา">
           <b-select expanded v-model="classYear">
             <option value="student1"> ปีการศึกษาที่ 1 </option>
@@ -19,9 +34,8 @@
         <div class="buttonConfirm">
           <button @click="clickToShowDetail(classYear)">ตกลง</button>
         </div>
-
           <b-table
-            :data="dataSubject"
+            :data="realData"
             :paginated="isPaginated"
             :per-page="perPage" >
             <template slot-scope="props">
@@ -58,7 +72,7 @@
               </b-table-column>
 
               <b-table-column  label="DELETE" centered>
-                <button @click="confirm(props.row.classYear, props.row.codeSubject)" class="button is-danger">DELETE</button>
+                <button @click="confirm(classYear, props.row.codeSubject, props.row.nameImgTeacher)" class="button is-danger">DELETE</button>
               </b-table-column>
             </template>
         </b-table>
@@ -69,7 +83,7 @@
 </template>
 
 <script>
-import { auth } from '../firebase'
+import { auth, storage } from '../firebase'
 import sidebar from '../components/sidebar'
 import axios from 'axios'
 export default {
@@ -82,39 +96,61 @@ export default {
       isPaginated: true,
       perPage: 20,
       classYear: '',
-      isLoading: false
+      isLoading: false,
+      selected: null,
+      name: '',
+      keepFirst: true,
+      openOnFocus: true
     }
   },
   methods: {
     async clickToShowDetail (classYear) {
+      this.isLoading = true
       const dataAxios = await axios({
         method: 'POST',
-        url: 'https://us-central1-backend-qvy.cloudfunctions.net/backendAPI/getSubject',
+        url: 'http://localhost:5000/backend-qvy/us-central1/backendAPI/getSubject',
         data: {
           student: classYear
         }
       })
       this.dataSubject = dataAxios.data.dataAll
-      console.log(this.dataSubject)
+      this.isLoading = false
     },
-    confirm (std, code) {
+    confirm (std, code, nameImg) {
       this.$buefy.dialog.confirm({
         message: 'ต้องการที่จะลบรายวิชานี้ใช่หรือไม่',
         confirmText: 'ตกลง',
         cancelText: 'ยกเลิก',
-        onConfirm: () => this.deleteSubjec(std, code)
+        onConfirm: () => this.deleteSubjec(std, code, nameImg)
       })
     },
-    async deleteSubjec (std, code) {
+    async deleteSubjec (std, code, nameImg) {
+      this.isLoading = true
       let dataAxios = await axios({
         method: 'DELETE',
-        url: 'https://us-central1-backend-qvy.cloudfunctions.net/backendAPI/deleteSubject',
+        url: 'http://localhost:5000/backend-qvy/us-central1/backendAPI/deleteSubject',
         data: {
           student: std,
           codeSubject: code
         }
       })
+      let storageRef = storage.ref().child(nameImg)
+      await storageRef.delete()
       this.dataSubject = dataAxios.data.dataAll
+      this.isLoading = false
+    }
+  },
+  computed: {
+    filteredDataArray () {
+      return this.dataSubject.filter((option) => {
+        return option.codeSubject
+          .toString()
+          .toLowerCase()
+          .indexOf(this.name.toLowerCase()) >= 0
+      })
+    },
+    realData () {
+      return this.selected !== null ? [this.selected] : this.dataSubject
     }
   },
   async mounted () {

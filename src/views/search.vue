@@ -4,10 +4,10 @@
       <sidebar />
     </div>
     <div class="magin-page container text-center">
-
     <b-loading :is-full-page="false"  :active.sync="isLoading"></b-loading>
       <div class="wrapper text-center">
-        <b-field label="Find a JS framework">
+        <h2>ค้นหารายวิชา</h2>
+        <b-field>
           <b-autocomplete
             field="codeSubject"
             v-model="name"
@@ -25,7 +25,7 @@
           :paginated="isPaginated"
           :per-page="perPage" >
             <template slot-scope="props">
-              <b-table-column field="imageTeacher" label="IMG" centered>
+              <b-table-column class="sizeImg" field="imageTeacher" label="IMG" centered>
                 <img width="350px" height="auto" :src="props.row.imageTeacher" alt="รูปอาจารย์วิชา">
               </b-table-column>
 

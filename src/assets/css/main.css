@@ -102,6 +102,20 @@ ul.sidebar-menu li {
 
 .container-form {
   padding: 30px 80px;
+  padding-top: 0;
+}
+
+td.sizeImg.has-text-centered {
+  max-width: 250px;
+  height: auto;
+}
+
+td.has-text-centered {
+  vertical-align: middle !important;
+}
+
+.flexSidebar h2 {
+  padding: 35px 0;
 }
 
 .deleteSubject .wrapper.text-center {
@@ -114,4 +128,14 @@ ul.sidebar-menu li {
 
 html {
   overflow: hidden !important;
+}
+
+.field.file.dropimg p.help.is-danger {
+  margin: 0;
+  margin-left: 10px;
+}
+
+.field.file.dropimg {
+  align-items: center;
+  display: flex;
 }
