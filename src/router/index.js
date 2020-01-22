@@ -11,7 +11,7 @@ export default new Router({
       component: () => import('../views/login.vue')
     },
     {
-      path: '/Creation',
+      path: '/creation',
       name: 'Creation',
       component: () => import('../views/addSubject.vue')
     },
